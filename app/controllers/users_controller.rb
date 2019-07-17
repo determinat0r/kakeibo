@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  
+  #ユーザに関するページはないので、要修正
+  
+  before_action :require_user_logged_in, only: [:index, :show]
+  
   def index
     @users = User.order(id: :desc)
   end
