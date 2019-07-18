@@ -20,6 +20,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      # group情報を紐付ける
+      join_group
       flash[:success] = 'ユーザを登録しました。'
       redirect_to @user
     else
@@ -36,7 +38,14 @@ class UsersController < ApplicationController
 
   private
 
+  def join_group
+    if params[:group_name].present?
+      if group = Group.find_or_create_by(name: params[:group_name])
+        @user.groups << group
+      end
+    end
+  end
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation,  groups_attributes: [:name])
   end
 end

@@ -27,6 +27,9 @@
         <%= f.label :password_confirmation, 'Confirmation' %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
       </div>
+      
+      <h3>-世帯情報-</h3>
+      <input type="text" name="group_name">
 
       <%= f.submit 'Sign up', class: 'btn btn-primary btn-block' %>
     <% end %>
