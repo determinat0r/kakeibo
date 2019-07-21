@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     if @user.save
       # group情報を紐付ける
       join_group
+      create_default_categories
       flash[:success] = 'ユーザを登録しました。'
       redirect_to @user
     else
@@ -45,6 +46,18 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def create_default_categories
+    @user.groups.first.categories.create(name: "食費")
+    @user.groups.first.categories.create(name: "医薬品")
+    @user.groups.first.categories.create(name: "消耗品")
+    @user.groups.first.categories.create(name: "衣服")
+    @user.groups.first.categories.create(name: "生活雑貨")
+    @user.groups.first.categories.create(name: "外食")
+    @user.groups.first.categories.create(name: "旅行")
+    @user.groups.first.categories.create(name: "レジャー")
+  end
+  
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation,  groups_attributes: [:name])
   end
