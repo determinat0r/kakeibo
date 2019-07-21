@@ -8,6 +8,7 @@ class User < ApplicationRecord
   
   has_many :users_groups_relationships
   has_many :groups, through: :users_groups_relationships, source: :group
+  has_many :expenses, foreign_key: 'input_user'
   
   def join(group)
     self.groups.find_or_create_by(group_id: group.id)
@@ -18,4 +19,11 @@ class User < ApplicationRecord
   # def join_group(group)
   #   groups << group
   # end
+  
+  def self.current=(user)
+    Thread.current[:current_user] = user
+  end
+  def self.current
+    Thread.current[:current_user]
+  end
 end

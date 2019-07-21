@@ -1,0 +1,41 @@
+<div class="text-center">
+  <h1>家計簿の入力</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+
+  <%= @expense.inspect %>
+    <%= form_with(model: @expense, local: true, url: expenses_path) do |f| %>
+      <%= render 'layouts/error_messages', model: f.object %>
+      
+      <div class="form-group">
+        <%= f.label :day, '日付' %>
+        <%= f.date_field :day, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :money, '金額（円）' %>
+        <%= f.number_field :money, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :category_id, 'カテゴリ' %>
+        <%= f.select :category_id, current_user.groups.first.categories.all.map { |c| [c.name, c.id] }, class: 'form-control'  %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :type, '支払対象（誰用の出費か）' %>
+        <%= f.select :type, {"自分用": UserExpense, "世帯用": GroupExpense}, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :memo, '詳細' %>
+        <%= f.text_area :memo, class: 'form-control' %>
+      </div>
+
+      <%= f.submit '登録', class: 'btn btn-success btn-block' %>
+    <% end %>
+  </div>
+</div>
+
