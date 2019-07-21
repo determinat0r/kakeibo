@@ -20,7 +20,7 @@
   </thead>
 
   <tbody>
-    <% current_user.expenses.each do |e| %>
+    <% current_user.user_expenses.each do |e| %>
       <tr>
         <td><%= e.day %></td>
         <td><%= e.money %></td>

@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :users_groups_relationships
   has_many :groups, through: :users_groups_relationships, source: :group
   has_many :expenses, foreign_key: 'input_user'
+  has_many :user_expenses, foreign_key: 'input_user'
+  has_many :group_expenses, foreign_key: 'input_user'
   
   def join(group)
     self.groups.find_or_create_by(group_id: group.id)

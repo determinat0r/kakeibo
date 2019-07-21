@@ -1,5 +1,5 @@
 class UserExpense < Expense
   
-  validates :pay_for_user, presence: true
+  belongs_to :pay_for_user, class_name: 'User'
   
 end

@@ -1,5 +1,5 @@
 class GroupExpense < Expense
   
-  validates :pay_for_group, presence: true
+  belongs_to :pay_for_group, class_name: 'Group'
   
 end
