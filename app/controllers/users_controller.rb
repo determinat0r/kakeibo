@@ -1,7 +1,4 @@
 class UsersController < ApplicationController
-  
-  #ユーザに関するページはないので、要修正
-  
   before_action :require_user_logged_in, only: [:index, :show]
   
   def index
@@ -32,9 +29,21 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.new
   end
 
   def update
+    @user = User.new(user_params)
+
+    if @user.save
+      # group情報を紐付ける
+      @user.groups << current_user.groups.first
+      flash[:success] = 'ユーザの追加に成功しました。'
+      redirect_to edit_user_path(current_user)
+    else
+      flash.now[:danger] = 'ユーザの追加に失敗しました。'
+      render :edit
+    end
   end
 
   private

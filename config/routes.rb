@@ -21,6 +21,9 @@ Rails.application.routes.draw do
       get :user
     end
   end
+  
+  resources :members, only: [:new, :create]
+  
   # resources :UserExpense, only: [:new, :create, :destroy, :show], controller: :expenses
   # resources :GroupExpense, only: [:new, :create, :destroy, :show], controller: :expenses
 end

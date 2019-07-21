@@ -1,11 +1,11 @@
 <div class="text-center">
-  <h1>世帯メンバーの追加</h1>
+  <h1>世帯（<%= current_user.groups.first.try(:name) %>）へのメンバーの追加</h1>
 </div>
 
 <div class="row">
   <div class="col-sm-6 offset-sm-3">
 
-    <%= form_with(model: @user, local: true) do |f| %>
+    <%= form_with(model: @user, local: true, url: members_path) do |f| %>
       <%= render 'layouts/error_messages', model: f.object %>
       
       <div class="form-group">
