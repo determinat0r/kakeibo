@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
   def join_group
     if params[:group_name].present?
-      if group = Group.find_or_create_by(name: params[:group_name])
+      if group = Group.create(name: params[:group_name])
         @user.groups << group
       end
     end
