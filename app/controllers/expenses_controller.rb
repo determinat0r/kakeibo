@@ -34,8 +34,7 @@ class ExpensesController < ApplicationController
   end
 
   def correct_user
-    @expense = current_user.expenses.find_by(id: params[:id])
-    unless @expense
+    if current_user.id.to_s != params[:id]
       redirect_to root_url
     end
   end

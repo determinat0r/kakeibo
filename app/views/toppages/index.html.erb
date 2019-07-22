@@ -3,11 +3,32 @@
   <br>
   <h3>生活費をどっちのが多く払っているかわからない・・・</h3>
   <h3>家計簿を自分の分と二人分分けてつけるのは面倒だ・・・</h3>
+  <br>
+  <br>
+  <h1>Live Togetherは、そんなお悩みを解決します！</h1>
 </div>
+  <br>
+  <br>
 
-<div class="center jumbotron">
-  <div class="text-center">
-    <h1>家族家計簿アプリ Live Together へようこそ</h1>
-    <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+<h2>★Live Togetherって何？</h2>
+<p>自分分と世帯分の両方を記録できる家計簿アプリです。</p>
+<p>誰がどれだけ払っているか管理でき、月末の清算もスムーズになります。</p>
+<br>
+
+<h2>★Live Togetherの特徴</h2>
+<ul>
+  <li>世帯分の家計簿をつけることができます。</li>
+  <li>自分の分の家計簿もつけられます。</li>
+  <li>清算のとき、誰が誰にいくら渡せばいいのかわかります。</li>
+</ul>
+
+
+<% unless logged_in? %>
+  <br>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>さあ、あなたもはじめましょう。</h1>
+      <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+    </div>
   </div>
-</div>
+<% end %>

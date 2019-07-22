@@ -9,7 +9,7 @@
 <h3><%= current_user.groups.first.users.first.try(:name) %> が <%= current_user.groups.first.users.second.try(:name) %> に <%= current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) - current_user.groups.first.users.first.group_expenses.ransack(@condition).result.all.sum(:money) %>円渡せば清算できます。</h3>
 <p>やり取りが終わったら、清算完了ボタンを押してください。</p>
 <% else %>
-<h3><%= current_user.groups.first.users.second.try(:name) %> が <%= current_user.groups.first.users.first.try(:name) %> に <%= current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) - current_user.groups.second.users.first.group_expenses.ransack(@condition).result.all.sum(:money) %>円渡せば清算できます。</h3>
+<h3><%= current_user.groups.first.users.second.try(:name) %> が<%= current_user.groups.first.users.first.try(:name) %> に <%= current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) - current_user.groups.first.users.second.group_expenses.ransack(@condition).result.all.sum(:money) %>円渡せば清算できます。</h3>
 <p>やり取りが終わったら、清算完了ボタンを押してください。</p>
 <% end %>
 <br>

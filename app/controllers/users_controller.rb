@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if user_params[groups_attributes: [:name]].blank? || user_params[groups_attributes: [:name]].length > 50
+    if params[:group_name].blank? || params[:group_name].length > 50
       flash.now[:danger] = '世帯名称は必須です。50字以内で入力してください。'
       render :new
     elsif @user.save
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       create_default_categories
       @user.groups.first.build_month(open_day: Date.current.beginning_of_month).save
       flash[:success] = 'ユーザを登録しました。'
-      redirect_to @user
+      redirect_to root_url
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new

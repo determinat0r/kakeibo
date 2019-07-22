@@ -13,7 +13,7 @@ class MonthsController < ApplicationController
     @month = Month.find(params[:id])
     date = @month.open_day.next_month
     @month.update(open_day: date)
-    redirect_to expense_path
+    redirect_to expense_path(current_user)
   end
 
   private
