@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_20_052355) do
+ActiveRecord::Schema.define(version: 2019_07_22_005322) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -70,6 +70,14 @@ ActiveRecord::Schema.define(version: 2019_07_20_052355) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "months", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "group_id"
+    t.date "open_day"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_months_on_group_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -100,6 +108,7 @@ ActiveRecord::Schema.define(version: 2019_07_20_052355) do
   add_foreign_key "expenses", "users", column: "input_user_id"
   add_foreign_key "expenses", "users", column: "pay_for_user_id"
   add_foreign_key "expenses", "users", column: "pay_user_id"
+  add_foreign_key "months", "groups"
   add_foreign_key "users_groups_relationships", "groups"
   add_foreign_key "users_groups_relationships", "users"
 end

@@ -10,7 +10,7 @@ class ExpensesController < ApplicationController
     @expense = current_user.expenses.build(expense_params)
     if @expense.save
       flash[:success] = '家計簿の入力が成功しました'
-      redirect_to root_url
+      redirect_to new_expense_path
     else
       flash.now[:danger] = '家計簿の入力が失敗しました。'
       render :new

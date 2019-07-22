@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
   
   resources :members, only: [:new, :create]
+  resources :months, only: [:edit, :update]
   
   # resources :UserExpense, only: [:new, :create, :destroy, :show], controller: :expenses
   # resources :GroupExpense, only: [:new, :create, :destroy, :show], controller: :expenses

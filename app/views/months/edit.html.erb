@@ -1,0 +1,47 @@
+<h1>清算</h1>
+<h2>-<%= @month.open_day.year %>年<%= @month.open_day.month %>月度分-</h2>
+<br>
+
+<% if current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) == current_user.groups.first.users.first.group_expenses.ransack(@condition).result.all.sum(:money) %>
+<h3>当月は清算作業不要です。</h3>
+<p>これ以降世帯出費を誰も記帳しない予定であれば、清算完了ボタンを押してください。</p>
+<% elsif current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) > current_user.groups.first.users.first.group_expenses.ransack(@condition).result.all.sum(:money) %>
+<h3><%= current_user.groups.first.users.first.try(:name) %> が <%= current_user.groups.first.users.second.try(:name) %> に <%= current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) - current_user.groups.first.users.first.group_expenses.ransack(@condition).result.all.sum(:money) %>円渡せば清算できます。</h3>
+<p>やり取りが終わったら、清算完了ボタンを押してください。</p>
+<% else %>
+<h3><%= current_user.groups.first.users.second.try(:name) %> が <%= current_user.groups.first.users.first.try(:name) %> に <%= current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) - current_user.groups.second.users.first.group_expenses.ransack(@condition).result.all.sum(:money) %>円渡せば清算できます。</h3>
+<p>やり取りが終わったら、清算完了ボタンを押してください。</p>
+<% end %>
+<br>
+
+<p>＊小数点以下は適宜調整してください。</p>
+<p>＊現在、二人清算にのみ対応です。先に追加された二人で世帯出費を割り勘しています。</p>
+<br>
+
+<h4>＜出費サマリ＞</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>世帯（<%= current_user.groups.first.try(:name) %>）の出費</th>
+      <th>世帯（<%= current_user.groups.first.try(:name) %>）の出費の半分</th>
+      <th><%= current_user.groups.first.users.first.try(:name) %>の払った分</th>
+      <th><%= current_user.groups.first.users.second.try(:name) %>の払った分</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money) %></td>
+        <td><%= current_user.groups.first.group_expenses.ransack(@condition).result.all.sum(:money).fdiv(2) %></td>
+        <td><%= current_user.groups.first.users.first.group_expenses.ransack(@condition).result.all.sum(:money) %></td>
+        <td><%= current_user.groups.first.users.second.group_expenses.ransack(@condition).result.all.sum(:money) %></td>
+      </tr>
+  </tbody>
+</table>
+
+<br>
+<p>この月の清算を完了すると、以降この月で世帯記帳をしても清算に反映されません。</p>
+
+<%= form_with(model: @month, local: true) do |f| %>
+  <%= f.submit '清算完了', class: 'btn btn-primary', data: { confirm: "本当に清算を完了してよろしいですか？" } %>
+<% end %>

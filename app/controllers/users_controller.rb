@@ -20,6 +20,7 @@ class UsersController < ApplicationController
       # group情報を紐付ける
       join_group
       create_default_categories
+      @user.groups.first.build_month(open_day: Date.current.beginning_of_month).save
       flash[:success] = 'ユーザを登録しました。'
       redirect_to @user
     else
