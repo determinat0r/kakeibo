@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show]
+  before_action :require_user_logged_in, only: [:index, :show, :edit, :update]
+  before_action :correct_user, only: [:index, :show, :edit, :update]
   
   def index
     @users = User.order(id: :desc)
@@ -16,7 +17,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save
+    if user_params[groups_attributes: [:name]].blank? || user_params[groups_attributes: [:name]].length > 50
+      flash.now[:danger] = '世帯名称は必須です。50字以内で入力してください。'
+      render :new
+    elsif @user.save
       # group情報を紐付ける
       join_group
       create_default_categories
@@ -30,19 +34,20 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.new
+    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.new(user_params)
-
-    if @user.save
-      # group情報を紐付ける
-      @user.groups << current_user.groups.first
-      flash[:success] = 'ユーザの追加に成功しました。'
+    @user = User.find(params[:id])
+    
+    if user_params[:password].blank?
+      flash.now[:danger] = 'パスワードが空欄です。'
+      render :edit
+    elsif @user.update(user_params)
+      flash[:success] = 'パスワードは正常に更新されました'
       redirect_to edit_user_path(current_user)
     else
-      flash.now[:danger] = 'ユーザの追加に失敗しました。'
+      flash.now[:danger] = 'パスワードは更新されませんでした'
       render :edit
     end
   end
@@ -70,5 +75,14 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation,  groups_attributes: [:name])
+  end
+
+  private
+
+  def correct_user
+    @user = current_user
+    if @user.id.to_s != params[:id]
+      redirect_to root_url
+    end
   end
 end

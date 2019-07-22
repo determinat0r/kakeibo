@@ -1,5 +1,14 @@
+
+<h1>設定</h1>
+
+<ul class="nav nav-tabs nav-justified mb-3">
+  <li class="nav-item"><a href="<%= edit_user_path(current_user) %>" class="nav-link <%= 'active' if current_page?(edit_user_path(current_user)) %>">ユーザパスワードの変更</a></li>
+  <li class="nav-item"><a href="<%= new_member_path %>" class="nav-link <%= 'active' if current_page?(new_member_path) %>">世帯へのユーザの追加</a></li>
+</ul>
+
 <div class="text-center">
   <h1>世帯（<%= current_user.groups.first.try(:name) %>）へのメンバーの追加</h1>
+  <p>＊現状、３人目以降の世帯メンバは、清算機能を利用できません。</p>
 </div>
 
 <div class="row">
@@ -26,6 +35,7 @@
       <div class="form-group" >
         <%= f.label :password_confirmation, 'Confirmation' %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
 
       <%= f.submit '登録', class: 'btn btn-primary btn-block' %>
     <% end %>

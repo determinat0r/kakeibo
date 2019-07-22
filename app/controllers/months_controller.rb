@@ -1,5 +1,6 @@
 class MonthsController < ApplicationController
   before_action :require_user_logged_in
+  before_action :correct_user
   
   def edit
     @month = Month.find(params[:id])
@@ -13,5 +14,14 @@ class MonthsController < ApplicationController
     date = @month.open_day.next_month
     @month.update(open_day: date)
     redirect_to expense_path
+  end
+
+  private
+
+  def correct_user
+    @month = current_user.groups.first.month
+    if @month.id.to_s != params[:id]
+      redirect_to root_url
+    end
   end
 end

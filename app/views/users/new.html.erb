@@ -29,7 +29,10 @@
       </div>
       
       <h3>-世帯情報-</h3>
-      <input type="text" name="group_name">
+      <p>所属する世帯の名称を入力してください。</p>
+      <p>すでに他の世帯メンバーがアカウントを作成済みの場合は、その方にメンバー追加をしてもらってください。</p>
+      <input type="text" name="group_name" class="form-control">
+      <br>
 
       <%= f.submit 'Sign up', class: 'btn btn-primary btn-block' %>
     <% end %>

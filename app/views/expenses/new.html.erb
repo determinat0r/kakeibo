@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-sm-6 offset-sm-3">
 
-  <%= @expense.inspect %>
+  <% @expense.inspect %>
     <%= form_with(model: @expense, local: true, url: expenses_path, scope: :expense) do |f| %>
       <%= render 'layouts/error_messages', model: f.object %>
       

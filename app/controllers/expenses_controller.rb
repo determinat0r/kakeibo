@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy]
+  before_action :correct_user, only: [:destroy, :show]
   
   def new
     @expense = current_user.expenses.build
@@ -19,12 +19,11 @@ class ExpensesController < ApplicationController
 
   def destroy
     @expense.destroy
-    flash[:success] = 'メッセージを削除しました。'
+    flash[:success] = '入力を削除しました。'
     redirect_back(fallback_location: root_path)
   end
 
   def show
-      @expense = current_user.expenses.build
       @expenses = current_user.expenses.order(id: :desc)
   end
 
@@ -35,7 +34,7 @@ class ExpensesController < ApplicationController
   end
 
   def correct_user
-    @expense = current_user.microposts.find_by(id: params[:id])
+    @expense = current_user.expenses.find_by(id: params[:id])
     unless @expense
       redirect_to root_url
     end

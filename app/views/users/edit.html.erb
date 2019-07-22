@@ -1,5 +1,12 @@
+<h1>設定</h1>
+
+<ul class="nav nav-tabs nav-justified mb-3">
+  <li class="nav-item"><a href="<%= edit_user_path(current_user) %>" class="nav-link <%= 'active' if current_page?(edit_user_path(current_user)) %>">ユーザパスワードの変更</a></li>
+  <li class="nav-item"><a href="<%= new_member_path %>" class="nav-link <%= 'active' if current_page?(new_member_path) %>">世帯へのユーザの追加</a></li>
+</ul>
+
 <div class="text-center">
-  <h1>世帯メンバーの追加</h1>
+  <h1>パスワードの変更</h1>
 </div>
 
 <div class="row">
@@ -7,16 +14,6 @@
 
     <%= form_with(model: @user, local: true) do |f| %>
       <%= render 'layouts/error_messages', model: f.object %>
-      
-      <div class="form-group">
-        <%= f.label :name, 'Name' %>
-        <%= f.text_field :name, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :email, 'Email' %>
-        <%= f.email_field :email, class: 'form-control' %>
-      </div>
 
       <div class="form-group">
         <%= f.label :password, 'Password' %>
@@ -26,6 +23,7 @@
       <div class="form-group" >
         <%= f.label :password_confirmation, 'Confirmation' %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
 
       <%= f.submit '登録', class: 'btn btn-primary btn-block' %>
     <% end %>
